@@ -5,10 +5,10 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.outlined.Build
 import androidx.compose.material.icons.outlined.Place
 import androidx.compose.material.icons.outlined.PlayArrow
 import androidx.compose.material.icons.outlined.ShoppingCart
-import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.toMutableStateList
@@ -19,7 +19,6 @@ import ca.kilbourne.isaac.lysts.ui.theme.LystsTheme
 
 class MainActivity : ComponentActivity() {
 
-    @ExperimentalMaterial3Api
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
@@ -28,16 +27,21 @@ class MainActivity : ComponentActivity() {
             val lists = remember {
                 mutableStateListOf(
                     TodoList(
+                        "Android Flavors",
+                        Icons.Outlined.Build,
+                        Placeholder.TodoListItems.androidFlavors().toMutableStateList()
+                    ),
+                    TodoList(
                         "Groceries",
-                        icon = Icons.Outlined.ShoppingCart,
+                        Icons.Outlined.ShoppingCart,
                         Placeholder.TodoListItems.groceries().toMutableStateList()
                     ), TodoList(
                         "Movies to Watch",
-                        icon = Icons.Outlined.PlayArrow,
+                        Icons.Outlined.PlayArrow,
                         Placeholder.TodoListItems.movies().toMutableStateList()
                     ), TodoList(
                         "Places to Visit",
-                        icon = Icons.Outlined.Place,
+                        Icons.Outlined.Place,
                         Placeholder.TodoListItems.places().toMutableStateList()
                     )
                 )
@@ -50,8 +54,6 @@ class MainActivity : ComponentActivity() {
             // - horizontal. sep
             // - delete all finished items from current list
 
-            // TODO: move all the presentation code to another file; this method should
-            //       concern itself with data loading and rendering our presentation
             LystsTheme {
                 MainActivityPresentation(todoLists = lists)
             }
