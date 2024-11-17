@@ -73,6 +73,7 @@ class MainActivity : ComponentActivity() {
 
             // Navbar should contain a VertMenu with the following options:
             // - rename list
+            // - change list icon (do we just enumerate Icons.Outlined? What about custom SVGs?)
             // - delete list
             // - horizontal. sep
             // - delete all finished items from current list
