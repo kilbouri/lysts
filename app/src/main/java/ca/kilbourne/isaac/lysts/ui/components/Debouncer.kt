@@ -37,8 +37,7 @@ inline fun debounced(debounceTime: Long = 1000L, crossinline onClick: () -> Unit
  * The same as [Modifier.clickable] with support to debouncing.
  */
 fun Modifier.debouncedClickable(
-    debounceTime: Long = 1000L,
-    onClick: () -> Unit
+    debounceTime: Long = 1000L, onClick: () -> Unit
 ): Modifier {
     return this.composed {
         val clickable = debounced(debounceTime = debounceTime, onClick = { onClick() })

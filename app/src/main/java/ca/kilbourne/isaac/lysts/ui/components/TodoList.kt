@@ -63,18 +63,15 @@ fun TodoList(data: MutableList<TodoListItem>) {
             onAcceptRename = {
                 data[index] = data[index].copy(description = it)
                 closeRename()
-            }
-        )
+            })
     }
 
     LazyColumn {
         itemsIndexed(data) { index, item ->
-            ListItem(
-                item = item,
+            ListItem(item = item,
                 onDoneChanged = { data[index] = item.copy(done = it) },
                 onDeleteRequest = debounced { data.removeAt(index) },
-                onRenameRequest = debounced { showRenameFor(index) }
-            )
+                onRenameRequest = debounced { showRenameFor(index) })
         }
     }
 }
@@ -103,24 +100,19 @@ private fun ListItem(
         Box {
             IconButton(onClick = showDropdown) {
                 Icon(
-                    Icons.Outlined.MoreVert,
-                    contentDescription = "More Options"
+                    Icons.Outlined.MoreVert, contentDescription = "More Options"
                 )
             }
             DropdownMenu(
                 expanded = menuExpanded.value,
                 onDismissRequest = hideDropdown,
             ) {
-                DropdownMenuItem(
-                    text = { Text("Rename") },
+                DropdownMenuItem(text = { Text("Rename") },
                     onClick = closeDropdownThen(onRenameRequest),
-                    leadingIcon = { Icon(Icons.Outlined.Edit, contentDescription = null) }
-                )
-                DropdownMenuItem(
-                    text = { Text("Delete") },
+                    leadingIcon = { Icon(Icons.Outlined.Edit, contentDescription = null) })
+                DropdownMenuItem(text = { Text("Delete") },
                     onClick = closeDropdownThen(onDeleteRequest),
-                    leadingIcon = { Icon(Icons.Outlined.Delete, contentDescription = null) }
-                )
+                    leadingIcon = { Icon(Icons.Outlined.Delete, contentDescription = null) })
             }
         }
     }
@@ -134,25 +126,19 @@ private fun PreviewRenameDialog() {
 
 @Composable
 private fun RenameDialog(
-    defaultValue: String = "",
-    onCancelRename: () -> Unit,
-    onAcceptRename: (String) -> Unit
+    defaultValue: String = "", onCancelRename: () -> Unit, onAcceptRename: (String) -> Unit
 ) {
     val newName = remember { mutableStateOf(defaultValue) }
     Dialog(onDismissRequest = onCancelRename) {
         Card {
             Column(Modifier.padding(16.dp, 8.dp)) {
-                TextField(
-                    value = newName.value,
-                    onValueChange = { newName.value = it }
-                )
+                TextField(value = newName.value, onValueChange = { newName.value = it })
 
                 Spacer(Modifier.height(16.dp))
 
                 Row(Modifier.align(Alignment.End)) {
                     Button(
-                        onClick = onCancelRename,
-                        colors = ButtonDefaults.buttonColors(
+                        onClick = onCancelRename, colors = ButtonDefaults.buttonColors(
                             containerColor = Color.Transparent,
                             contentColor = MaterialTheme.colorScheme.onPrimaryContainer
                         )

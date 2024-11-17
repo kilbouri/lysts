@@ -29,27 +29,19 @@ fun PreviewTodoListList() {
     TodoListList(
         lists = mutableListOf(
             TodoList(
-                "Groceries",
-                icon = Icons.Outlined.ShoppingCart,
-                mutableListOf(
+                "Groceries", icon = Icons.Outlined.ShoppingCart, mutableListOf(
                     TodoListItem("Item 1", false),
                     TodoListItem("Item 2", false),
                     TodoListItem("Item 3", false),
                 )
-            ),
-            TodoList(
-                "Movies to Watch",
-                icon = Icons.Outlined.PlayArrow,
-                mutableListOf(
+            ), TodoList(
+                "Movies to Watch", icon = Icons.Outlined.PlayArrow, mutableListOf(
                     TodoListItem("Item 1", false),
                     TodoListItem("Item 2", false),
                     TodoListItem("Item 3", false),
                 )
-            ),
-            TodoList(
-                "Places to Visit",
-                icon = Icons.Outlined.Place,
-                mutableListOf(
+            ), TodoList(
+                "Places to Visit", icon = Icons.Outlined.Place, mutableListOf(
                     TodoListItem("Item 1", false),
                     TodoListItem("Item 2", false),
                     TodoListItem("Item 3", false),
@@ -67,16 +59,13 @@ fun TodoListList(lists: MutableList<TodoList>, onListSelected: (TodoList) -> Uni
                 debounced { onListSelected(list) },
                 shape = RectangleShape,
                 colors = ButtonDefaults.textButtonColors(
-                    Color.Transparent,
-                    MaterialTheme.colorScheme.onBackground
+                    Color.Transparent, MaterialTheme.colorScheme.onBackground
                 )
             ) {
                 Icon(list.icon, contentDescription = null)
                 Spacer(Modifier.width(8.dp))
                 Text(
-                    text = list.name,
-                    textAlign = TextAlign.Start,
-                    modifier = Modifier.weight(1f)
+                    text = list.name, textAlign = TextAlign.Start, modifier = Modifier.weight(1f)
                 )
             }
         }
