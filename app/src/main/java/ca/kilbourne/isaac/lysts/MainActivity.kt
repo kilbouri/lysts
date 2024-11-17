@@ -20,7 +20,7 @@ import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
-import ca.kilbourne.isaac.lysts.data.TodoItem
+import ca.kilbourne.isaac.lysts.data.TodoListItem
 import ca.kilbourne.isaac.lysts.ui.components.TodoList
 import ca.kilbourne.isaac.lysts.ui.theme.LystsTheme
 import kotlinx.coroutines.launch
@@ -44,15 +44,24 @@ class MainActivity : ComponentActivity() {
             }
 
             val data = remember {
-                mutableStateListOf<TodoItem>(
-                    TodoItem("Item 1", false),
-                    TodoItem("Item 2", true),
-                    TodoItem("Item 3", false),
-                    TodoItem("Item 4", true),
-                    TodoItem("Item 5", false),
-                    TodoItem("Item 6", true),
-                    TodoItem("Item 7", false),
-                    TodoItem("Item 8", true)
+                mutableStateListOf(
+                    TodoListItem("Item 1", false),
+                    TodoListItem("Item 2", true),
+                    TodoListItem("Item 3", false),
+                    TodoListItem("Item 4", true),
+                    TodoListItem("Item 5", false),
+                    TodoListItem("Item 6", true),
+                    TodoListItem("Item 4", true),
+                    TodoListItem("Item 5", false),
+                    TodoListItem("Item 6", true),
+                    TodoListItem("Item 4", true),
+                    TodoListItem("Item 5", false),
+                    TodoListItem("Item 6", true),
+                    TodoListItem("Item 4", true),
+                    TodoListItem("Item 5", false),
+                    TodoListItem("Item 6", true),
+                    TodoListItem("Item 7", false),
+                    TodoListItem("Item 8", true)
                 )
             }
 
@@ -82,7 +91,7 @@ class MainActivity : ComponentActivity() {
                         }
                     ) {
                         Box(modifier = Modifier.padding(it)) {
-                            TodoList(items = data)
+                            TodoList(data = data)
                         }
                     }
                 }
