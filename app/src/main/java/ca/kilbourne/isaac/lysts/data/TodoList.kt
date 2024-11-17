@@ -1,3 +1,5 @@
 package ca.kilbourne.isaac.lysts.data
 
-data class TodoList(val name: String, val items: MutableList<TodoListItem>)
+import androidx.compose.ui.graphics.vector.ImageVector
+
+data class TodoList(val name: String, val icon: ImageVector, val items: MutableList<TodoListItem>)
