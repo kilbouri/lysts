@@ -43,10 +43,6 @@ fun PreviewTodoList() {
             data = mutableListOf(
                 TodoListItem("Item 1", false),
                 TodoListItem("Item 2", true),
-                TodoListItem("Item 3", false),
-                TodoListItem("Item 4", true),
-                TodoListItem("Item 5", false),
-                TodoListItem("Item 6", true),
             )
         )
     }
