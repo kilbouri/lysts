@@ -65,7 +65,7 @@ fun MainActivityPresentation(
     var showNewItemDialog by remember { mutableStateOf(false) }
     if (showNewItemDialog) {
         TextInputDialog(onCancel = { showNewItemDialog = false }, onAccept = {
-            addItemToList(it)
+            addItemToList(it.trim())
             showNewItemDialog = false
         })
     }
@@ -77,7 +77,10 @@ fun MainActivityPresentation(
     }) {
         Scaffold(modifier = Modifier.fillMaxSize(), topBar = {
             MainActivityTopBar(
-                toggleDrawer = toggleDrawer, selectedList = selectedList
+                toggleDrawer = toggleDrawer,
+                onDeleteListRequest = {},
+                onRenameListRequest = {},
+                selectedList = selectedList
             )
         }, floatingActionButton = {
             FloatingActionButton(debounced { showNewItemDialog = true }) {

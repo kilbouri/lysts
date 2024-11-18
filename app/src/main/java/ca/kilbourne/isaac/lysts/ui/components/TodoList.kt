@@ -14,6 +14,8 @@ import androidx.compose.material3.DropdownMenu
 import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.MenuDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -98,7 +100,14 @@ private fun ListItem(
                     leadingIcon = { Icon(Icons.Outlined.Edit, contentDescription = null) })
                 DropdownMenuItem(text = { Text("Delete") },
                     onClick = closeDropdownThen(onDeleteRequest),
-                    leadingIcon = { Icon(Icons.Outlined.Delete, contentDescription = null) })
+                    colors = MenuDefaults.itemColors(MaterialTheme.colorScheme.error),
+                    leadingIcon = {
+                        Icon(
+                            Icons.Outlined.Delete,
+                            tint = MaterialTheme.colorScheme.error,
+                            contentDescription = null
+                        )
+                    })
             }
         }
     }
