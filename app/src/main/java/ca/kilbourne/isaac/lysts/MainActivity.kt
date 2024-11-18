@@ -30,8 +30,7 @@ class MainActivity : ComponentActivity() {
                         "Android Flavors",
                         Icons.Outlined.Build,
                         Placeholder.TodoListItems.androidFlavors().toMutableStateList()
-                    ),
-                    TodoList(
+                    ), TodoList(
                         "Groceries",
                         Icons.Outlined.ShoppingCart,
                         Placeholder.TodoListItems.groceries().toMutableStateList()

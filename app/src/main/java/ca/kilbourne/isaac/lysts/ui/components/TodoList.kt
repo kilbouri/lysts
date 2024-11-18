@@ -1,11 +1,7 @@
 package ca.kilbourne.isaac.lysts.ui.components
 
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
@@ -13,26 +9,22 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.Delete
 import androidx.compose.material.icons.outlined.Edit
 import androidx.compose.material.icons.outlined.MoreVert
-import androidx.compose.material3.Button
-import androidx.compose.material3.ButtonDefaults
-import androidx.compose.material3.Card
 import androidx.compose.material3.Checkbox
 import androidx.compose.material3.DropdownMenu
 import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
-import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.window.Dialog
+import ca.kilbourne.isaac.lysts.data.Placeholder
 import ca.kilbourne.isaac.lysts.data.TodoListItem
 
 @Preview
@@ -40,27 +32,24 @@ import ca.kilbourne.isaac.lysts.data.TodoListItem
 fun PreviewTodoList() {
     Box(Modifier.width(256.dp)) {
         TodoList(
-            data = mutableListOf(
-                TodoListItem("Item 1", false),
-                TodoListItem("Item 2", true),
-            )
+            data = Placeholder.TodoLists.places().items
         )
     }
 }
 
 @Composable
 fun TodoList(data: MutableList<TodoListItem>) {
-    val itemToRename = remember { mutableStateOf<Int?>(null) }
-    val showRenameFor = { idx: Int -> itemToRename.value = idx }
-    val closeRename = { itemToRename.value = null }
+    var itemToRename by remember { mutableStateOf<Int?>(null) }
+    val showRenameFor = { idx: Int -> itemToRename = idx }
+    val closeRename = { itemToRename = null }
 
-    if (itemToRename.value != null) {
-        val index = itemToRename.value!!
+    if (itemToRename != null) {
+        val index = itemToRename!!
 
-        RenameDialog(
-            defaultValue = data[index].description,
-            onCancelRename = closeRename,
-            onAcceptRename = {
+        TextInputDialog(initialValue = data[index].description,
+            acceptButtonLabel = "Rename",
+            onCancel = closeRename,
+            onAccept = {
                 data[index] = data[index].copy(description = it)
                 closeRename()
             })
@@ -83,12 +72,9 @@ private fun ListItem(
     onDeleteRequest: (() -> Unit) = {},
     onRenameRequest: (() -> Unit) = {}
 ) {
-    val menuExpanded = remember { mutableStateOf(false) }
-    val showDropdown: () -> Unit = { menuExpanded.value = true }
-    val hideDropdown: () -> Unit = { menuExpanded.value = false }
-
+    var menuExpanded by remember { mutableStateOf(false) }
     val closeDropdownThen: (func: () -> Unit) -> () -> Unit = {
-        { hideDropdown(); it() }
+        { menuExpanded = false; it() }
     }
 
     Row(verticalAlignment = Alignment.CenterVertically) {
@@ -98,14 +84,14 @@ private fun ListItem(
         )
         Text(item.description, Modifier.weight(1f))
         Box {
-            IconButton(onClick = showDropdown) {
+            IconButton(onClick = { menuExpanded = true }) {
                 Icon(
                     Icons.Outlined.MoreVert, contentDescription = "More Options"
                 )
             }
             DropdownMenu(
-                expanded = menuExpanded.value,
-                onDismissRequest = hideDropdown,
+                expanded = menuExpanded,
+                onDismissRequest = { menuExpanded = false },
             ) {
                 DropdownMenuItem(text = { Text("Rename") },
                     onClick = closeDropdownThen(onRenameRequest),
@@ -113,43 +99,6 @@ private fun ListItem(
                 DropdownMenuItem(text = { Text("Delete") },
                     onClick = closeDropdownThen(onDeleteRequest),
                     leadingIcon = { Icon(Icons.Outlined.Delete, contentDescription = null) })
-            }
-        }
-    }
-}
-
-@Preview
-@Composable
-private fun PreviewRenameDialog() {
-    RenameDialog("Name", {}, {})
-}
-
-@Composable
-private fun RenameDialog(
-    defaultValue: String = "", onCancelRename: () -> Unit, onAcceptRename: (String) -> Unit
-) {
-    val newName = remember { mutableStateOf(defaultValue) }
-    Dialog(onDismissRequest = onCancelRename) {
-        Card {
-            Column(Modifier.padding(16.dp, 8.dp)) {
-                TextField(value = newName.value, onValueChange = { newName.value = it })
-
-                Spacer(Modifier.height(16.dp))
-
-                Row(Modifier.align(Alignment.End)) {
-                    Button(
-                        onClick = onCancelRename, colors = ButtonDefaults.buttonColors(
-                            containerColor = Color.Transparent,
-                            contentColor = MaterialTheme.colorScheme.onPrimaryContainer
-                        )
-                    ) {
-                        Text("Cancel")
-                    }
-
-                    Button(onClick = debounced { onAcceptRename(newName.value) }) {
-                        Text("Rename")
-                    }
-                }
             }
         }
     }
