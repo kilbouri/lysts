@@ -146,7 +146,6 @@ sealed class Placeholder {
                     TodoListItem(description = "London, England", done = false),
                     TodoListItem(description = "Maldives", done = false),
                     TodoListItem(description = "Turks & Caicos", done = false),
-                    TodoListItem(description = "Belongs on List?", done = false),
                     TodoListItem(description = "Tokyo", done = false),
                 )
             }
