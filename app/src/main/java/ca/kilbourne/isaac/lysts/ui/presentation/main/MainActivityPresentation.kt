@@ -4,6 +4,7 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.PlayArrow
 import androidx.compose.material.icons.outlined.Add
 import androidx.compose.material3.DrawerValue
 import androidx.compose.material3.FloatingActionButton
@@ -55,11 +56,11 @@ fun MainActivityPresentation(
     }
 
     // TODO: save and load this from storage
-    val selectedListIndex = remember { mutableIntStateOf(0) }
-    val selectedList = todoLists[selectedListIndex.intValue]
+    val selectedListIndex by remember { mutableIntStateOf(0) }
+    val selectedList = todoLists.getOrNull(selectedListIndex)
 
     val addItemToList: (String) -> Unit = {
-        selectedList.items.add(TodoListItem(it, false))
+        selectedList?.items?.add(TodoListItem(it, false))
     }
 
     var showNewItemDialog by remember { mutableStateOf(false) }
@@ -80,7 +81,7 @@ fun MainActivityPresentation(
                 toggleDrawer = toggleDrawer,
                 onDeleteListRequest = {},
                 onRenameListRequest = {},
-                selectedList = selectedList
+                selectedList = selectedList ?: TodoList("", Icons.Default.PlayArrow, mutableListOf())
             )
         }, floatingActionButton = {
             FloatingActionButton(debounced { showNewItemDialog = true }) {
@@ -88,7 +89,9 @@ fun MainActivityPresentation(
             }
         }) {
             Box(modifier = Modifier.padding(it)) {
-                MainActivityContent(selectedList)
+                if (selectedList != null) {
+                    MainActivityContent(selectedList)
+                }
             }
         }
     }
