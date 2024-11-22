@@ -5,8 +5,11 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.viewModels
-import androidx.compose.runtime.collectAsState
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.outlined.PlayArrow
 import androidx.compose.runtime.getValue
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import ca.kilbourne.isaac.lysts.data.TodoList
 import ca.kilbourne.isaac.lysts.ui.presentation.main.MainActivityPresentation
 import ca.kilbourne.isaac.lysts.ui.theme.LystsTheme
 import kotlinx.coroutines.flow.map
@@ -20,11 +23,19 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
 
         setContent {
-            val allLists by viewModel.allTodoLists.map { it.toMutableList() }.collectAsState(initial = mutableListOf())
+            val allLists by viewModel.allTodoLists.map { it.toMutableList() }
+                .collectAsStateWithLifecycle(initialValue = mutableListOf())
 
             LystsTheme {
-                MainActivityPresentation(todoLists = allLists)
+                MainActivityPresentation(
+                    todoLists = allLists,
+                    allLists.firstOrNull() ?: TodoList(
+                        "..",
+                        Icons.Outlined.PlayArrow,
+                        mutableListOf()
+                    )
+                )
             }
         }
     }
-}
+}t

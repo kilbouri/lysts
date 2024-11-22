@@ -30,7 +30,7 @@ private fun PreviewMainActivityDrawer() {
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun MainActivityDrawer(todoLists: MutableList<TodoList>) {
+fun MainActivityDrawer(todoLists: List<TodoList>) {
     Column {
         TopAppBar(title = { Text("Your Lysts") }, actions = {
             IconButton(onClick = {}) {

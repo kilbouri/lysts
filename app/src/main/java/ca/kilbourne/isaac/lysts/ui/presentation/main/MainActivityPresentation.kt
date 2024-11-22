@@ -4,7 +4,6 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.PlayArrow
 import androidx.compose.material.icons.outlined.Add
 import androidx.compose.material3.DrawerValue
 import androidx.compose.material3.FloatingActionButton
@@ -15,7 +14,6 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.rememberDrawerState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
@@ -33,19 +31,21 @@ import kotlinx.coroutines.launch
 @Composable
 private fun PreviewMainActivityPresentation() {
     MainActivityPresentation(
-        mutableListOf(
+        listOf(
             Placeholder.TodoLists.androidFlavors(),
             Placeholder.TodoLists.movies(),
             Placeholder.TodoLists.places(),
             Placeholder.TodoLists.groceries(),
             Placeholder.TodoLists.empty(),
-        )
+        ),
+        Placeholder.TodoLists.androidFlavors()
     )
 }
 
 @Composable
 fun MainActivityPresentation(
-    todoLists: MutableList<TodoList>
+    todoLists: List<TodoList>,
+    selectedList: TodoList
 ) {
     val coroutineScope = rememberCoroutineScope()
     val drawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
@@ -55,12 +55,8 @@ fun MainActivityPresentation(
         }
     }
 
-    // TODO: save and load this from storage
-    val selectedListIndex by remember { mutableIntStateOf(0) }
-    val selectedList = todoLists.getOrNull(selectedListIndex)
-
     val addItemToList: (String) -> Unit = {
-        selectedList?.items?.add(TodoListItem(it, false))
+        selectedList.items.add(TodoListItem(it, false))
     }
 
     var showNewItemDialog by remember { mutableStateOf(false) }
@@ -81,7 +77,7 @@ fun MainActivityPresentation(
                 toggleDrawer = toggleDrawer,
                 onDeleteListRequest = {},
                 onRenameListRequest = {},
-                selectedList = selectedList ?: TodoList("", Icons.Default.PlayArrow, mutableListOf())
+                selectedList = selectedList
             )
         }, floatingActionButton = {
             FloatingActionButton(debounced { showNewItemDialog = true }) {
@@ -89,9 +85,7 @@ fun MainActivityPresentation(
             }
         }) {
             Box(modifier = Modifier.padding(it)) {
-                if (selectedList != null) {
-                    MainActivityContent(selectedList)
-                }
+                MainActivityContent(selectedList)
             }
         }
     }

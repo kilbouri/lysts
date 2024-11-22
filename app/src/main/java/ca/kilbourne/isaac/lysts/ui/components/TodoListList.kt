@@ -25,7 +25,7 @@ import ca.kilbourne.isaac.lysts.data.TodoListItem
 @Composable
 fun PreviewTodoListList() {
     TodoListList(
-        lists = mutableListOf(
+        lists = listOf(
             TodoList(
                 "Groceries", icon = Icons.Outlined.ShoppingCart, mutableListOf(
                     TodoListItem("Item 1", false),
@@ -50,7 +50,7 @@ fun PreviewTodoListList() {
 }
 
 @Composable
-fun TodoListList(lists: MutableList<TodoList>, onListSelected: (TodoList) -> Unit = {}) {
+fun TodoListList(lists: List<TodoList>, onListSelected: (TodoList) -> Unit = {}) {
     LazyColumn {
         itemsIndexed(lists) { _, list ->
             Row(
