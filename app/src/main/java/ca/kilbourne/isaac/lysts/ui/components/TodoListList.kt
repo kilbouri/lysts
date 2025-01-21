@@ -24,19 +24,19 @@ fun PreviewTodoListList() {
     TodoListList(
         lists = listOf(
             TodoList(
-                "Groceries"/*, icon = Icons.Outlined.ShoppingCart, mutableListOf(
+                name = "Groceries"/*, icon = Icons.Outlined.ShoppingCart, mutableListOf(
                     TodoListItem("Item 1", false),
                     TodoListItem("Item 2", false),
                     TodoListItem("Item 3", false),
                 )*/
             ), TodoList(
-                "Movies to Watch"/*, icon = Icons.Outlined.PlayArrow, mutableListOf(
+                name = "Movies to Watch"/*, icon = Icons.Outlined.PlayArrow, mutableListOf(
                     TodoListItem("Item 1", false),
                     TodoListItem("Item 2", false),
                     TodoListItem("Item 3", false),
                 )*/
             ), TodoList(
-                "Places to Visit"/*, icon = Icons.Outlined.Place, mutableListOf(
+                name = "Places to Visit"/*, icon = Icons.Outlined.Place, mutableListOf(
                     TodoListItem("Item 1", false),
                     TodoListItem("Item 2", false),
                     TodoListItem("Item 3", false),
