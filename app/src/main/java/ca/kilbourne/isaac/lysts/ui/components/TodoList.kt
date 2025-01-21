@@ -26,7 +26,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import ca.kilbourne.isaac.lysts.data.Placeholder
 import ca.kilbourne.isaac.lysts.data.TodoListItem
 
 @Preview
@@ -34,7 +33,8 @@ import ca.kilbourne.isaac.lysts.data.TodoListItem
 fun PreviewTodoList() {
     Box(Modifier.width(256.dp)) {
         TodoList(
-            data = Placeholder.TodoLists.places().items
+//            data = Placeholder.TodoLists.places().items
+            data = mutableListOf()
         )
     }
 }
@@ -49,20 +49,20 @@ fun TodoList(data: MutableList<TodoListItem>) {
         val index = itemToRename!!
 
         TextInputDialog(initialValue = data[index].description,
-            acceptButtonLabel = "Rename",
-            onCancel = closeRename,
-            onAccept = {
-                data[index] = data[index].copy(description = it)
-                closeRename()
-            })
+                        acceptButtonLabel = "Rename",
+                        onCancel = closeRename,
+                        onAccept = {
+                            data[index] = data[index].copy(description = it)
+                            closeRename()
+                        })
     }
 
     LazyColumn {
         itemsIndexed(data) { index, item ->
             ListItem(item = item,
-                onDoneChanged = { data[index] = item.copy(done = it) },
-                onDeleteRequest = debounced { data.removeAt(index) },
-                onRenameRequest = debounced { showRenameFor(index) })
+                     onDoneChanged = { data[index] = item.copy(done = it) },
+                     onDeleteRequest = debounced { data.removeAt(index) },
+                     onRenameRequest = debounced { showRenameFor(index) })
         }
     }
 }
@@ -96,18 +96,23 @@ private fun ListItem(
                 onDismissRequest = { menuExpanded = false },
             ) {
                 DropdownMenuItem(text = { Text("Rename") },
-                    onClick = closeDropdownThen(onRenameRequest),
-                    leadingIcon = { Icon(Icons.Outlined.Edit, contentDescription = null) })
+                                 onClick = closeDropdownThen(onRenameRequest),
+                                 leadingIcon = {
+                                     Icon(
+                                         Icons.Outlined.Edit,
+                                         contentDescription = null
+                                     )
+                                 })
                 DropdownMenuItem(text = { Text("Delete") },
-                    onClick = closeDropdownThen(onDeleteRequest),
-                    colors = MenuDefaults.itemColors(MaterialTheme.colorScheme.error),
-                    leadingIcon = {
-                        Icon(
-                            Icons.Outlined.Delete,
-                            tint = MaterialTheme.colorScheme.error,
-                            contentDescription = null
-                        )
-                    })
+                                 onClick = closeDropdownThen(onDeleteRequest),
+                                 colors = MenuDefaults.itemColors(MaterialTheme.colorScheme.error),
+                                 leadingIcon = {
+                                     Icon(
+                                         Icons.Outlined.Delete,
+                                         tint = MaterialTheme.colorScheme.error,
+                                         contentDescription = null
+                                     )
+                                 })
             }
         }
     }

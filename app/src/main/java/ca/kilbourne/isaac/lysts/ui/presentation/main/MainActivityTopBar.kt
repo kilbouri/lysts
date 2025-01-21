@@ -68,7 +68,7 @@ fun MainActivityTopBar(
                     DropdownMenuItem(
                         text = { Text("Remove All Checked") },
                         onClick = {
-                            selectedList.items.removeAll { it.done }; listOptionsExpanded = false
+//                            selectedList.items.removeAll { it.done }; listOptionsExpanded = false
                         },
                         leadingIcon = { Icon(Icons.Outlined.Clear, contentDescription = null) }
                     )

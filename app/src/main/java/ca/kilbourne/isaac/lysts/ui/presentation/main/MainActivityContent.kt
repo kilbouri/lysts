@@ -14,5 +14,5 @@ private fun PreviewMainActivityContent() {
 
 @Composable
 fun MainActivityContent(todoList: TodoList) {
-    TodoList(data = todoList.items)
+    TodoList(data = /*todoList.items*/ mutableListOf())
 }

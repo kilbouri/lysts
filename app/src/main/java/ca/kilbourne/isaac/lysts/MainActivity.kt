@@ -5,8 +5,6 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.viewModels
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.outlined.PlayArrow
 import androidx.compose.runtime.getValue
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import ca.kilbourne.isaac.lysts.data.TodoList
@@ -30,9 +28,7 @@ class MainActivity : ComponentActivity() {
                 MainActivityPresentation(
                     todoLists = allLists,
                     allLists.firstOrNull() ?: TodoList(
-                        "..",
-                        Icons.Outlined.PlayArrow,
-                        mutableListOf()
+                        "...",
                     )
                 )
             }

@@ -22,7 +22,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import ca.kilbourne.isaac.lysts.data.Placeholder
 import ca.kilbourne.isaac.lysts.data.TodoList
-import ca.kilbourne.isaac.lysts.data.TodoListItem
 import ca.kilbourne.isaac.lysts.ui.components.TextInputDialog
 import ca.kilbourne.isaac.lysts.ui.components.debounced
 import kotlinx.coroutines.launch
@@ -56,7 +55,7 @@ fun MainActivityPresentation(
     }
 
     val addItemToList: (String) -> Unit = {
-        selectedList.items.add(TodoListItem(it, false))
+//        selectedList.items.add(TodoListItem(it, false))
     }
 
     var showNewItemDialog by remember { mutableStateOf(false) }

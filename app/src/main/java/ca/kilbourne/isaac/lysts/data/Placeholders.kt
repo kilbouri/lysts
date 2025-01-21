@@ -1,52 +1,45 @@
 package ca.kilbourne.isaac.lysts.data
 
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.outlined.Build
-import androidx.compose.material.icons.outlined.Info
-import androidx.compose.material.icons.outlined.Place
-import androidx.compose.material.icons.outlined.PlayArrow
-import androidx.compose.material.icons.outlined.ShoppingCart
-
 sealed class Placeholder {
     sealed class TodoLists {
         companion object {
             fun androidFlavors(): TodoList {
                 return TodoList(
                     name = "Android Flavors",
-                    icon = Icons.Outlined.Build,
-                    items = TodoListItems.androidFlavors().toMutableList()
+//                    icon = Icons.Outlined.Build,
+//                    items = TodoListItems.androidFlavors().toMutableList()
                 )
             }
 
             fun groceries(): TodoList {
                 return TodoList(
                     name = "Groceries",
-                    icon = Icons.Outlined.ShoppingCart,
-                    items = TodoListItems.groceries().toMutableList()
+//                    icon = Icons.Outlined.ShoppingCart,
+//                    items = TodoListItems.groceries().toMutableList()
                 )
             }
 
             fun movies(): TodoList {
                 return TodoList(
                     name = "Movies to Watch",
-                    icon = Icons.Outlined.PlayArrow,
-                    items = TodoListItems.movies().toMutableList()
+//                    icon = Icons.Outlined.PlayArrow,
+//                    items = TodoListItems.movies().toMutableList()
                 )
             }
 
             fun places(): TodoList {
                 return TodoList(
                     name = "Places to Visit",
-                    icon = Icons.Outlined.Place,
-                    items = TodoListItems.places().toMutableList()
+//                    icon = Icons.Outlined.Place,
+//                    items = TodoListItems.places().toMutableList()
                 )
             }
 
             fun empty(): TodoList {
                 return TodoList(
                     name = "Empty Placeholder List",
-                    icon = Icons.Outlined.Info,
-                    items = mutableListOf()
+//                    icon = Icons.Outlined.Info,
+//                    items = mutableListOf()
                 )
             }
         }
