@@ -22,6 +22,7 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import ca.kilbourne.isaac.lysts.data.TodoList
 import ca.kilbourne.isaac.lysts.ui.theme.LystsTheme
 import kotlinx.coroutines.launch
 
@@ -35,7 +36,8 @@ class MainActivity : ComponentActivity() {
 
         setContent {
             val coroutineScope = rememberCoroutineScope()
-            val allLists by viewModel.allTodoLists.collectAsStateWithLifecycle(initialValue = listOf())
+            val allLists by viewModel.todoLists.getAll()
+                .collectAsStateWithLifecycle(initialValue = listOf())
 
             LystsTheme {
                 Scaffold {
@@ -47,8 +49,10 @@ class MainActivity : ComponentActivity() {
                         Row {
                             Button(onClick = {
                                 coroutineScope.launch {
-                                    viewModel.addNewList(
-                                        allLists.size.toString()
+                                    viewModel.todoLists.create(
+                                        TodoList(
+                                            name = allLists.size.toString()
+                                        )
                                     )
                                 }
                             }) {
@@ -62,7 +66,7 @@ class MainActivity : ComponentActivity() {
                             itemsIndexed(allLists) { index, item ->
 
                                 Button(onClick = {
-                                    coroutineScope.launch { viewModel.removeList(item.id!!) }
+                                    coroutineScope.launch { viewModel.todoLists.delete(item.id!!) }
                                 }) {
                                     Icon(
                                         Icons.Default.Delete,
