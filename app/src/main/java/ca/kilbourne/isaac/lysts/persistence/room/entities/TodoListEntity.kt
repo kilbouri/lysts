@@ -6,6 +6,11 @@ import androidx.room.PrimaryKey
 
 @Entity(tableName = "todo_lists")
 data class TodoListEntity(
-    @PrimaryKey(autoGenerate = true) @ColumnInfo(name = "id") val id: Long = 0,
-    @ColumnInfo(name = "name") val name: String
-)
+    @PrimaryKey(autoGenerate = true) @ColumnInfo(name = Columns.ID) val id: Long = 0,
+    @ColumnInfo(name = Columns.NAME) val name: String
+) {
+    object Columns {
+        const val ID = "id"
+        const val NAME = "name"
+    }
+}

@@ -4,7 +4,9 @@ import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
+import ca.kilbourne.isaac.lysts.persistence.room.dao.TodoItemDao
 import ca.kilbourne.isaac.lysts.persistence.room.dao.TodoListDao
+import ca.kilbourne.isaac.lysts.persistence.room.dao.TodoListWithItemsDao
 import ca.kilbourne.isaac.lysts.persistence.room.entities.TodoItemEntity
 import ca.kilbourne.isaac.lysts.persistence.room.entities.TodoListEntity
 
@@ -16,6 +18,8 @@ import ca.kilbourne.isaac.lysts.persistence.room.entities.TodoListEntity
 abstract class AppDatabase : RoomDatabase() {
 
     abstract fun todoListDao(): TodoListDao
+    abstract fun todoItemDao(): TodoItemDao
+    abstract fun todoListWithItemsDao(): TodoListWithItemsDao
 
     companion object {
         @Volatile

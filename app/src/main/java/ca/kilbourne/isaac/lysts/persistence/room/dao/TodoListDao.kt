@@ -8,12 +8,8 @@ import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface TodoListDao {
-
     @Query("SELECT * FROM todo_lists")
     fun getAll(): Flow<List<TodoListEntity>>
-
-    @Query("SELECT * FROM todo_lists WHERE id = :listId LIMIT 1")
-    fun get(listId: Long): Flow<TodoListEntity>
 
     @Insert
     suspend fun insert(list: TodoListEntity)
