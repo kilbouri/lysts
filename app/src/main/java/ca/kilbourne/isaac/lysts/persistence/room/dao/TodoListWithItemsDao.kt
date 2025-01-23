@@ -11,5 +11,5 @@ interface TodoListWithItemsDao {
 
     @Transaction
     @Query("SELECT * FROM todo_lists WHERE id = :listId")
-    fun getTodoListWithItems(listId: Long): Flow<TodoListWithItemsRelation>
+    fun get(listId: Long): Flow<TodoListWithItemsRelation>
 }
