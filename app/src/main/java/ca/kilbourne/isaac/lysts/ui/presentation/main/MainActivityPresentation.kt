@@ -19,27 +19,10 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
-import ca.kilbourne.isaac.lysts.data.Placeholder
 import ca.kilbourne.isaac.lysts.data.TodoList
 import ca.kilbourne.isaac.lysts.ui.components.TextInputDialog
 import ca.kilbourne.isaac.lysts.ui.components.debounced
 import kotlinx.coroutines.launch
-
-@Preview
-@Composable
-private fun PreviewMainActivityPresentation() {
-    MainActivityPresentation(
-        listOf(
-            Placeholder.TodoLists.androidFlavors(),
-            Placeholder.TodoLists.movies(),
-            Placeholder.TodoLists.places(),
-            Placeholder.TodoLists.groceries(),
-            Placeholder.TodoLists.empty(),
-        ),
-        Placeholder.TodoLists.androidFlavors()
-    )
-}
 
 @Composable
 fun MainActivityPresentation(

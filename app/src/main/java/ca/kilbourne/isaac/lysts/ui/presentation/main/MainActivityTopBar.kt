@@ -22,20 +22,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
-import androidx.compose.ui.tooling.preview.Preview
-import ca.kilbourne.isaac.lysts.data.Placeholder
 import ca.kilbourne.isaac.lysts.data.TodoList
-
-@Preview
-@Composable
-private fun PreviewMainActivityTopBar() {
-    MainActivityTopBar(
-        toggleDrawer = {},
-        onDeleteListRequest = {},
-        onRenameListRequest = {},
-        Placeholder.TodoLists.androidFlavors()
-    )
-}
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
