@@ -20,6 +20,7 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import ca.kilbourne.isaac.lysts.data.TodoList
+import ca.kilbourne.isaac.lysts.data.TodoListWithItems
 import ca.kilbourne.isaac.lysts.ui.components.TextInputDialog
 import ca.kilbourne.isaac.lysts.ui.components.debounced
 import kotlinx.coroutines.launch
@@ -27,7 +28,7 @@ import kotlinx.coroutines.launch
 @Composable
 fun MainActivityPresentation(
     todoLists: List<TodoList>,
-    selectedList: TodoList
+    selectedList: TodoListWithItems
 ) {
     val coroutineScope = rememberCoroutineScope()
     val drawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
@@ -59,7 +60,7 @@ fun MainActivityPresentation(
                 toggleDrawer = toggleDrawer,
                 onDeleteListRequest = {},
                 onRenameListRequest = {},
-                selectedList = selectedList
+                selectedList = selectedList.list
             )
         }, floatingActionButton = {
             FloatingActionButton(debounced { showNewItemDialog = true }) {
@@ -67,7 +68,7 @@ fun MainActivityPresentation(
             }
         }) {
             Box(modifier = Modifier.padding(it)) {
-                MainActivityContent(selectedList)
+                MainActivityContent(selectedList.items.toMutableList())
             }
         }
     }
