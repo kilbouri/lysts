@@ -26,7 +26,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import ca.kilbourne.isaac.lysts.data.TodoListItem
+import ca.kilbourne.isaac.lysts.data.TodoItem
 
 @Preview
 @Composable
@@ -40,7 +40,7 @@ fun PreviewTodoList() {
 }
 
 @Composable
-fun TodoList(data: MutableList<TodoListItem>) {
+fun TodoList(data: MutableList<TodoItem>) {
     var itemToRename by remember { mutableStateOf<Int?>(null) }
     val showRenameFor = { idx: Int -> itemToRename = idx }
     val closeRename = { itemToRename = null }
@@ -69,7 +69,7 @@ fun TodoList(data: MutableList<TodoListItem>) {
 
 @Composable
 private fun ListItem(
-    item: TodoListItem,
+    item: TodoItem,
     onDoneChanged: ((newState: Boolean) -> Unit)? = null,
     onDeleteRequest: (() -> Unit) = {},
     onRenameRequest: (() -> Unit) = {}

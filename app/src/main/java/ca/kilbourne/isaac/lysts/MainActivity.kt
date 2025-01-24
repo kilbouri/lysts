@@ -7,8 +7,8 @@ import androidx.activity.enableEdgeToEdge
 import androidx.activity.viewModels
 import androidx.compose.runtime.getValue
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import ca.kilbourne.isaac.lysts.data.TodoItem
 import ca.kilbourne.isaac.lysts.data.TodoList
-import ca.kilbourne.isaac.lysts.data.TodoListItem
 import ca.kilbourne.isaac.lysts.data.TodoListWithItems
 import ca.kilbourne.isaac.lysts.ui.presentation.main.MainActivityPresentation
 import ca.kilbourne.isaac.lysts.ui.theme.LystsTheme
@@ -30,7 +30,7 @@ class MainActivity : ComponentActivity() {
                     todoLists = allLists,
                     TodoListWithItems(
                         list = TodoList(name = "..."),
-                        items = listOf<TodoListItem>()
+                        items = listOf<TodoItem>()
                     )
                 )
             }

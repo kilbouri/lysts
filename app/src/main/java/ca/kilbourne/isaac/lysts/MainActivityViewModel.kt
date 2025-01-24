@@ -2,8 +2,8 @@ package ca.kilbourne.isaac.lysts
 
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
+import ca.kilbourne.isaac.lysts.data.TodoItem
 import ca.kilbourne.isaac.lysts.data.TodoList
-import ca.kilbourne.isaac.lysts.data.TodoListItem
 import ca.kilbourne.isaac.lysts.data.TodoListWithItems
 import ca.kilbourne.isaac.lysts.persistence.room.dao.TodoItemDao
 import ca.kilbourne.isaac.lysts.persistence.room.dao.TodoListDao
@@ -29,7 +29,7 @@ class MainActivityViewModel(application: Application) : AndroidViewModel(applica
     }
 
     class TodoItemsProxy(private val dao: TodoItemDao) {
-        suspend fun insert(item: TodoListItem) = dao.insert(item.toEntity())
+        suspend fun insert(item: TodoItem) = dao.insert(item.toEntity())
         suspend fun delete(itemId: Long) = dao.delete(itemId)
         suspend fun rename(itemId: Long, newName: String) = dao.rename(itemId, newName)
     }
