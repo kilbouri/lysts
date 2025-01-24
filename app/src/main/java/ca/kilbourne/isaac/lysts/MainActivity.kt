@@ -10,7 +10,7 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import ca.kilbourne.isaac.lysts.data.TodoItem
 import ca.kilbourne.isaac.lysts.data.TodoList
 import ca.kilbourne.isaac.lysts.data.TodoListWithItems
-import ca.kilbourne.isaac.lysts.ui.presentation.main.MainActivityPresentation
+import ca.kilbourne.isaac.lysts.ui.presentation.old.MainActivityPresentation
 import ca.kilbourne.isaac.lysts.ui.theme.LystsTheme
 
 class MainActivity : ComponentActivity() {
@@ -22,8 +22,7 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
 
         setContent {
-            val allLists by viewModel.todoLists.getAll()
-                .collectAsStateWithLifecycle(initialValue = listOf())
+            val allLists by viewModel.todoLists.getAll().collectAsStateWithLifecycle(listOf())
 
             LystsTheme {
                 MainActivityPresentation(

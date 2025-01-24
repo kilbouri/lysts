@@ -1,4 +1,4 @@
-package ca.kilbourne.isaac.lysts.ui.presentation.main
+package ca.kilbourne.isaac.lysts.ui.presentation.old
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
