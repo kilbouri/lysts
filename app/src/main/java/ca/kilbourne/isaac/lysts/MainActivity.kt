@@ -7,6 +7,10 @@ import androidx.activity.enableEdgeToEdge
 import androidx.activity.viewModels
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Add
+import androidx.compose.material3.FloatingActionButton
+import androidx.compose.material3.Icon
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -32,11 +36,18 @@ class MainActivity : ComponentActivity() {
             val allLists by viewModel.todoLists.getAll().collectAsStateWithLifecycle(listOf())
 
             LystsTheme {
-                Scaffold(topBar = {
-                    MainActivityTopBar(
-                        TodoList(name = "Shopping List"),
-                        showListOptions = { appMenuShown = true })
-                }
+                Scaffold(
+                    topBar = {
+                        MainActivityTopBar(
+                            TodoList(name = "Shopping List"),
+                            showListOptions = { appMenuShown = true }
+                        )
+                    },
+                    floatingActionButton = {
+                        FloatingActionButton(onClick = {}) {
+                            Icon(Icons.Default.Add, contentDescription = "Add List Item")
+                        }
+                    }
                 ) {
                     Box(Modifier.padding(it))
                 }
