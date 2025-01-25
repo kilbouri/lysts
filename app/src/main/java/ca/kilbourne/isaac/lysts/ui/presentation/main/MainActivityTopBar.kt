@@ -45,8 +45,6 @@ fun MainActivityTopBarPreview() {
 fun MainActivityTopBar(
     currentList: TodoList,
     showListPicker: () -> Unit = {},
-    showListOptions: () -> Unit = {},
-    onDismissRequest: () -> Unit = {},
     onRemoveDoneRequest: () -> Unit = {},
     onRemoveAllRequest: () -> Unit = {},
     onNewListRequest: () -> Unit = {},
