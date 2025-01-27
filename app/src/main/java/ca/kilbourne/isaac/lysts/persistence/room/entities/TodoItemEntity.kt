@@ -9,13 +9,11 @@ import androidx.room.PrimaryKey
 @Entity(
     tableName = "todo_items",
     indices = [Index(TodoItemEntity.Columns.LIST_ID)],
-    foreignKeys = [
-        ForeignKey(
-            entity = TodoListEntity::class,
-            parentColumns = [TodoListEntity.Columns.ID],
-            childColumns = [TodoItemEntity.Columns.LIST_ID]
-        )
-    ]
+    foreignKeys = [ForeignKey(
+        entity = TodoListEntity::class,
+        parentColumns = [TodoListEntity.Columns.ID],
+        childColumns = [TodoItemEntity.Columns.LIST_ID]
+    )]
 )
 data class TodoItemEntity(
     @PrimaryKey(autoGenerate = true) @ColumnInfo(name = Columns.ID) val id: Long = 0,

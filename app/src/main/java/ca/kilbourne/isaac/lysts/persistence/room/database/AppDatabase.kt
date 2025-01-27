@@ -4,14 +4,15 @@ import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
+import ca.kilbourne.isaac.lysts.persistence.room.dao.CurrentListDao
 import ca.kilbourne.isaac.lysts.persistence.room.dao.TodoItemDao
 import ca.kilbourne.isaac.lysts.persistence.room.dao.TodoListDao
-import ca.kilbourne.isaac.lysts.persistence.room.dao.TodoListWithItemsDao
+import ca.kilbourne.isaac.lysts.persistence.room.entities.CurrentListEntity
 import ca.kilbourne.isaac.lysts.persistence.room.entities.TodoItemEntity
 import ca.kilbourne.isaac.lysts.persistence.room.entities.TodoListEntity
 
 @Database(
-    entities = [TodoListEntity::class, TodoItemEntity::class],
+    entities = [TodoListEntity::class, TodoItemEntity::class, CurrentListEntity::class],
     version = 1,
     exportSchema = false
 )
@@ -19,7 +20,7 @@ abstract class AppDatabase : RoomDatabase() {
 
     abstract fun todoListDao(): TodoListDao
     abstract fun todoItemDao(): TodoItemDao
-    abstract fun todoListWithItemsDao(): TodoListWithItemsDao
+    abstract fun currentListDao(): CurrentListDao
 
     companion object {
         @Volatile
