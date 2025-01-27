@@ -13,7 +13,7 @@ import ca.kilbourne.isaac.lysts.persistence.room.entities.TodoListEntity
 @Database(
     entities = [TodoListEntity::class, TodoItemEntity::class],
     version = 1,
-    exportSchema = true
+    exportSchema = false
 )
 abstract class AppDatabase : RoomDatabase() {
 
