@@ -22,8 +22,10 @@ fun MainActivityUiRoot(todoLists: List<TodoList>, currentList: TodoListWithItems
     Scaffold(
         topBar = { MainActivityTopBar(currentList?.list) },
         floatingActionButton = {
-            FloatingActionButton(onClick = {}) {
-                Icon(Icons.Default.Add, contentDescription = "Add List Item")
+            if (currentList != null) {
+                FloatingActionButton(onClick = {}) {
+                    Icon(Icons.Default.Add, contentDescription = "Add List Item")
+                }
             }
         }
     ) {
