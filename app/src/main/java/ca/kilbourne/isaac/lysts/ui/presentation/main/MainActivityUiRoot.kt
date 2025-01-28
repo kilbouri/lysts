@@ -13,7 +13,6 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
-import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import ca.kilbourne.isaac.lysts.data.TodoList
 import ca.kilbourne.isaac.lysts.data.TodoListWithItems
@@ -36,7 +35,6 @@ fun MainActivityUiRoot(todoLists: List<TodoList>, currentList: TodoListWithItems
             else if (currentList.items.isEmpty()) HintText("List Empty")
             else TodoListItemsColumn(
                 currentList.items,
-                modifier = Modifier.padding(horizontal = 4.dp)
             )
         }
     }
