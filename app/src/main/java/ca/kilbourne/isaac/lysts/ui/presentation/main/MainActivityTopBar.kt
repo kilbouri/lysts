@@ -43,7 +43,7 @@ fun MainActivityTopBarPreview() {
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun MainActivityTopBar(
-    currentList: TodoList,
+    currentList: TodoList?,
     showListPicker: () -> Unit = {},
     onRemoveDoneRequest: () -> Unit = {},
     onRemoveAllRequest: () -> Unit = {},
@@ -61,34 +61,55 @@ fun MainActivityTopBar(
             }
         },
         title = {
-            Row(verticalAlignment = Alignment.CenterVertically) {
-                Icon(
-                    imageVector = Icons.Default.ShoppingCart,
-                    contentDescription = "Icon for List '${currentList.name}'"
-                )
-
-                Text(currentList.name, modifier = Modifier.padding(start = 8.dp))
-            }
+            if (currentList == null) LystsTitle()
+            else TodoListTitle(currentList)
         },
         actions = {
-            Box() {
-                IconButton(onClick = { appMenuExpanded = !appMenuExpanded }) {
-                    Icon(Icons.Default.MoreVert, "More")
-                }
+            if (currentList != null) {
+                Box() {
+                    IconButton(onClick = { appMenuExpanded = !appMenuExpanded }) {
+                        Icon(Icons.Default.MoreVert, "More")
+                    }
 
-                MainActivityAppMenu(
-                    expanded = appMenuExpanded,
-                    onDismissRequest = { appMenuExpanded = false },
-                    onRemoveDoneRequest = onRemoveDoneRequest,
-                    onRemoveAllRequest = onRemoveAllRequest,
-                    onNewListRequest = onNewListRequest,
-                    onEditListRequest = onEditListRequest,
-                    onDeleteListRequest = onDeleteListRequest,
-                    onSettingsRequest = onSettingsRequest
-                )
+                    MainActivityAppMenu(
+                        expanded = appMenuExpanded,
+                        onDismissRequest = { appMenuExpanded = false },
+                        onRemoveDoneRequest = onRemoveDoneRequest,
+                        onRemoveAllRequest = onRemoveAllRequest,
+                        onNewListRequest = onNewListRequest,
+                        onEditListRequest = onEditListRequest,
+                        onDeleteListRequest = onDeleteListRequest,
+                        onSettingsRequest = onSettingsRequest
+                    )
+                }
             }
         }
     )
+}
+
+@Composable
+private fun LystsTitle() {
+    Row(verticalAlignment = Alignment.CenterVertically) {
+        Icon(
+            // TODO: real logo
+            imageVector = Icons.Default.Check,
+            contentDescription = "Lysts Logo"
+        )
+
+        Text("Lysts", modifier = Modifier.padding(start = 8.dp))
+    }
+}
+
+@Composable
+private fun TodoListTitle(list: TodoList) {
+    Row(verticalAlignment = Alignment.CenterVertically) {
+        Icon(
+            imageVector = Icons.Default.ShoppingCart,
+            contentDescription = "Icon for List '${list.name}'"
+        )
+
+        Text(list.name, modifier = Modifier.padding(start = 8.dp))
+    }
 }
 
 @Composable
