@@ -13,9 +13,11 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
+import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import ca.kilbourne.isaac.lysts.data.TodoList
 import ca.kilbourne.isaac.lysts.data.TodoListWithItems
+import ca.kilbourne.isaac.lysts.ui.components.TodoListItemsColumn
 
 @Composable
 fun MainActivityUiRoot(todoLists: List<TodoList>, currentList: TodoListWithItems?) {
@@ -32,6 +34,10 @@ fun MainActivityUiRoot(todoLists: List<TodoList>, currentList: TodoListWithItems
         Box(Modifier.padding(it)) {
             if (currentList == null) HintText("No List Selected")
             else if (currentList.items.isEmpty()) HintText("List Empty")
+            else TodoListItemsColumn(
+                currentList.items,
+                modifier = Modifier.padding(horizontal = 4.dp)
+            )
         }
     }
 }
