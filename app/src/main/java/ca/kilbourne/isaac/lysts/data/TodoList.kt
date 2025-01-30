@@ -2,10 +2,10 @@ package ca.kilbourne.isaac.lysts.data
 
 import ca.kilbourne.isaac.lysts.persistence.room.entities.TodoListEntity
 
-data class TodoList(val id: Long? = null, val name: String) {
+data class TodoList(val id: Long = 0, val name: String) {
 
     fun toEntity(): TodoListEntity {
-        return TodoListEntity(id = id ?: 0, name = name)
+        return TodoListEntity(id = id, name = name)
     }
 
     companion object {

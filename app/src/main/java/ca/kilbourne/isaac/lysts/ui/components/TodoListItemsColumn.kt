@@ -25,10 +25,13 @@ import ca.kilbourne.isaac.lysts.data.TodoItem
 import ca.kilbourne.isaac.lysts.ui.theme.CustomIcons
 
 @Composable
-fun TodoListItemsColumn(listItems: List<TodoItem>) {
+fun TodoListItemsColumn(
+    listItems: List<TodoItem>,
+    onItemCompletionChange: (TodoItem, Boolean) -> Unit = { _, _ -> }
+) {
     LazyColumn {
         items(listItems) {
-            TodoListItem(item = it)
+            TodoListItem(item = it, onDoneChange = { done -> onItemCompletionChange(it, done) })
         }
     }
 }

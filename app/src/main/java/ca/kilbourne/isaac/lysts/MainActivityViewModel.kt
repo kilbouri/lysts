@@ -31,6 +31,7 @@ class MainActivityViewModel(application: Application) : AndroidViewModel(applica
 
     class TodoItemsProxy(private val dao: TodoItemDao) {
         suspend fun create(item: TodoItem) = dao.insert(item.toEntity())
+        suspend fun setCompletion(itemId: Long, done: Boolean) = dao.setCompletion(itemId, done)
         suspend fun delete(itemId: Long) = dao.delete(itemId)
         suspend fun rename(itemId: Long, newName: String) = dao.rename(itemId, newName)
     }

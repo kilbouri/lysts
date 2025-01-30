@@ -3,13 +3,13 @@ package ca.kilbourne.isaac.lysts.data
 import ca.kilbourne.isaac.lysts.persistence.room.entities.TodoItemEntity
 
 data class TodoItem(
-    val id: Long? = null,
+    val id: Long = 0,
     val listId: Long,
     val description: String,
-    val done: Boolean
+    val done: Boolean = false
 ) {
     fun toEntity(): TodoItemEntity {
-        return TodoItemEntity(id = id ?: 0, listId = listId, description = description, done = done)
+        return TodoItemEntity(id = id, listId = listId, description = description, done = done)
     }
 
     companion object {

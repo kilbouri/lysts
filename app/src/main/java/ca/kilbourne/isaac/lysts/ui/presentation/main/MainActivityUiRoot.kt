@@ -14,17 +14,23 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.unit.sp
+import ca.kilbourne.isaac.lysts.data.TodoItem
 import ca.kilbourne.isaac.lysts.data.TodoList
 import ca.kilbourne.isaac.lysts.data.TodoListWithItems
 import ca.kilbourne.isaac.lysts.ui.components.TodoListItemsColumn
 
 @Composable
-fun MainActivityUiRoot(todoLists: List<TodoList>, currentList: TodoListWithItems?) {
+fun MainActivityUiRoot(
+    todoLists: List<TodoList>,
+    currentList: TodoListWithItems?,
+    onItemCompletionChange: (TodoItem, Boolean) -> Unit = { _, _ -> },
+    onAddItemRequest: () -> Unit = {}
+) {
     Scaffold(
         topBar = { MainActivityTopBar(currentList?.list) },
         floatingActionButton = {
             if (currentList != null) {
-                FloatingActionButton(onClick = {}) {
+                FloatingActionButton(onClick = onAddItemRequest) {
                     Icon(Icons.Default.Add, contentDescription = "Add List Item")
                 }
             }
@@ -35,6 +41,7 @@ fun MainActivityUiRoot(todoLists: List<TodoList>, currentList: TodoListWithItems
             else if (currentList.items.isEmpty()) HintText("List Empty")
             else TodoListItemsColumn(
                 currentList.items,
+                onItemCompletionChange
             )
         }
     }
