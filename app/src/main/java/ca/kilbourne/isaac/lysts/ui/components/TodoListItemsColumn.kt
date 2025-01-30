@@ -75,9 +75,9 @@ private fun TodoItemDeleteArea(modifier: Modifier, onDeleteRequest: () -> Unit =
         horizontalArrangement = Arrangement.Center,
         modifier = modifier
             .background(MaterialTheme.colorScheme.errorContainer)
-            .fillMaxSize()
-            .minimumInteractiveComponentSize()
             .clickable(onClick = onDeleteRequest)
+            .minimumInteractiveComponentSize()
+            .fillMaxSize()
     ) {
         Icon(
             Icons.Outlined.Delete,
