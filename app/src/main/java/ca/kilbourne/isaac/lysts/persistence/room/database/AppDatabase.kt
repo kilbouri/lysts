@@ -32,7 +32,9 @@ abstract class AppDatabase : RoomDatabase() {
                     context.applicationContext,
                     AppDatabase::class.java,
                     "todo_list_database"
-                ).build()
+                )
+                    .addCallback(SeederCallback(context))
+                    .build()
 
                 _instance = instance
                 instance

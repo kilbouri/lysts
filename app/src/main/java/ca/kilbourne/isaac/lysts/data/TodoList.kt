@@ -9,7 +9,12 @@ data class TodoList(val id: Long? = null, val name: String) {
     }
 
     companion object {
-        fun fromEntity(entity: TodoListEntity): TodoList {
+        fun from(entity: TodoListEntity?): TodoList? {
+            if (entity == null) return null
+            return fromNotNull(entity)
+        }
+
+        fun fromNotNull(entity: TodoListEntity): TodoList {
             return TodoList(id = entity.id, name = entity.name)
         }
     }

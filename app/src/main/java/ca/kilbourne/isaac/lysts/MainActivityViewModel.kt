@@ -9,9 +9,8 @@ import ca.kilbourne.isaac.lysts.persistence.room.dao.CurrentListDao
 import ca.kilbourne.isaac.lysts.persistence.room.dao.TodoItemDao
 import ca.kilbourne.isaac.lysts.persistence.room.dao.TodoListDao
 import ca.kilbourne.isaac.lysts.persistence.room.database.AppDatabase
-import ca.kilbourne.isaac.lysts.persistence.room.entities.CurrentListEntity
+import ca.kilbourne.isaac.lysts.persistence.room.relations.CurrentListRelation
 import kotlinx.coroutines.flow.map
-import kotlin.collections.map
 
 class MainActivityViewModel(application: Application) : AndroidViewModel(application) {
 
@@ -22,12 +21,9 @@ class MainActivityViewModel(application: Application) : AndroidViewModel(applica
     val todoItems = TodoItemsProxy(db.todoItemDao())
 
     class TodoListsProxy(private val dao: TodoListDao) {
-        fun getWithItems(listId: Long) = dao.getWithItems(listId).map {
-            if (it == null) null
-            else TodoListWithItems.fromRelation(it)
-        }
+        fun getAll() = dao.getAll().map { TodoList::fromNotNull }
+        fun getWithItems(listId: Long) = dao.getWithItems(listId).map(TodoListWithItems::from)
 
-        fun getAll() = dao.getAll().map { it.map(TodoList::fromEntity) }
         suspend fun create(newList: TodoList) = dao.insert(newList.toEntity())
         suspend fun delete(id: Long) = dao.delete(id)
         suspend fun rename(id: Long, newName: String) = dao.rename(id, newName)
@@ -40,23 +36,10 @@ class MainActivityViewModel(application: Application) : AndroidViewModel(applica
     }
 
     class CurrentTodoListProxy(private val dao: CurrentListDao) {
-        private companion object {
-            const val DEFAULT_TRACKER_ID: Long = 0
-        }
+        fun get() = dao.get().map<CurrentListRelation?, _> { TodoList.from(it?.list) }
+        fun withItems() = dao.getWithItems().map(TodoListWithItems::from)
 
-        suspend fun set(listId: Long) = dao.upsert(CurrentListEntity(DEFAULT_TRACKER_ID, listId))
-
-        fun get() = dao.get(DEFAULT_TRACKER_ID).map {
-            if (it == null) null
-            else TodoList.fromEntity(it.list)
-        }
-
-        fun withItems() = dao.getWithItems(DEFAULT_TRACKER_ID).map {
-            if (it == null) null
-            else TodoListWithItems(
-                list = TodoList.fromEntity(it.list),
-                items = it.items.map(TodoItem::fromEntity)
-            )
-        }
+        suspend fun set(listId: Long) = dao.set(listId)
+        suspend fun delete() = dao.delete()
     }
 }

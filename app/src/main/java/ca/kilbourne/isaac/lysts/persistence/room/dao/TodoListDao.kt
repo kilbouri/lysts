@@ -18,7 +18,7 @@ interface TodoListDao {
     fun getAll(): Flow<List<TodoListEntity>>
 
     @Insert
-    suspend fun insert(list: TodoListEntity)
+    suspend fun insert(list: TodoListEntity): Long
 
     @Query("DELETE FROM todo_lists WHERE id = :listId")
     suspend fun delete(listId: Long)

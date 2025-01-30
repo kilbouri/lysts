@@ -1,11 +1,8 @@
 package ca.kilbourne.isaac.lysts.persistence.room.dao
 
 import androidx.room.Dao
-import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import androidx.room.Transaction
-import androidx.room.Update
-import ca.kilbourne.isaac.lysts.persistence.room.entities.CurrentListEntity
 import ca.kilbourne.isaac.lysts.persistence.room.relations.CurrentListRelation
 import ca.kilbourne.isaac.lysts.persistence.room.relations.CurrentListWithItemsRelation
 import kotlinx.coroutines.flow.Flow
@@ -14,16 +11,16 @@ import kotlinx.coroutines.flow.Flow
 interface CurrentListDao {
 
     @Transaction
-    @Query("SELECT * FROM current_lists WHERE id = :itemId")
-    fun get(itemId: Long): Flow<CurrentListRelation?>
+    @Query("SELECT * FROM current_lists WHERE id = 0")
+    fun get(): Flow<CurrentListRelation?>
 
     @Transaction
-    @Query("SELECT * FROM current_lists WHERE id = :itemId")
-    fun getWithItems(itemId: Long): Flow<CurrentListWithItemsRelation?>
+    @Query("SELECT * FROM current_lists WHERE id = 0")
+    fun getWithItems(): Flow<CurrentListWithItemsRelation?>
 
-    @Update(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun upsert(item: CurrentListEntity)
+    @Query("INSERT OR REPLACE INTO current_lists(id, list_id) VALUES (0, :listId)")
+    suspend fun set(listId: Long)
 
-    @Query("DELETE FROM current_lists WHERE id = :itemId")
-    suspend fun delete(itemId: Long)
+    @Query("DELETE FROM current_lists WHERE id = 0")
+    suspend fun delete()
 }

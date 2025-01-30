@@ -1,13 +1,31 @@
 package ca.kilbourne.isaac.lysts.data
 
+import ca.kilbourne.isaac.lysts.persistence.room.relations.CurrentListWithItemsRelation
 import ca.kilbourne.isaac.lysts.persistence.room.relations.TodoListWithItemsRelation
 
 data class TodoListWithItems(val list: TodoList, val items: List<TodoItem>) {
     companion object {
-        fun fromRelation(relation: TodoListWithItemsRelation): TodoListWithItems {
+        fun from(relation: TodoListWithItemsRelation?): TodoListWithItems? {
+            if (relation == null) return null
+            return fromNotNull(relation)
+        }
+
+        fun fromNotNull(relation: TodoListWithItemsRelation): TodoListWithItems {
             return TodoListWithItems(
-                list = TodoList.fromEntity(relation.list),
-                items = relation.items.map { TodoItem.fromEntity(it) }
+                list = TodoList.fromNotNull(relation.list),
+                items = relation.items.map(TodoItem::fromNotNull)
+            )
+        }
+
+        fun from(relation: CurrentListWithItemsRelation?): TodoListWithItems? {
+            if (relation == null) return null
+            return fromNotNull(relation)
+        }
+
+        fun fromNotNull(relation: CurrentListWithItemsRelation): TodoListWithItems {
+            return TodoListWithItems(
+                list = TodoList.fromNotNull(relation.list),
+                items = relation.items.map(TodoItem::fromNotNull)
             )
         }
     }

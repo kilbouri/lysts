@@ -13,7 +13,12 @@ data class TodoItem(
     }
 
     companion object {
-        fun fromEntity(entity: TodoItemEntity): TodoItem {
+        fun from(entity: TodoItemEntity?): TodoItem? {
+            if (entity == null) return null
+            return fromNotNull(entity)
+        }
+
+        fun fromNotNull(entity: TodoItemEntity): TodoItem {
             return TodoItem(
                 id = entity.id,
                 listId = entity.listId,
