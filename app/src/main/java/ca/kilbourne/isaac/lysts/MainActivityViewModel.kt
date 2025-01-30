@@ -21,7 +21,7 @@ class MainActivityViewModel(application: Application) : AndroidViewModel(applica
     val todoItems = TodoItemsProxy(db.todoItemDao())
 
     class TodoListsProxy(private val dao: TodoListDao) {
-        fun getAll() = dao.getAll().map { TodoList::fromNotNull }
+        fun getAll() = dao.getAll().map { it.map(TodoList::fromNotNull) }
         fun getWithItems(listId: Long) = dao.getWithItems(listId).map(TodoListWithItems::from)
 
         suspend fun create(newList: TodoList) = dao.insert(newList.toEntity())
