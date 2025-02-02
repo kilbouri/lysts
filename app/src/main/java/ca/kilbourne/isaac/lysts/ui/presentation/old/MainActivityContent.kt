@@ -1,7 +1,7 @@
 package ca.kilbourne.isaac.lysts.ui.presentation.old
 
 import androidx.compose.runtime.Composable
-import ca.kilbourne.isaac.lysts.data.TodoItem
+import ca.kilbourne.isaac.lysts.data.domain.TodoItem
 import ca.kilbourne.isaac.lysts.ui.components.TodoList
 
 @Composable

@@ -18,4 +18,10 @@ interface TodoItemDao {
 
     @Query("UPDATE todo_lists SET name = :newName WHERE id = :itemId")
     suspend fun rename(itemId: Long, newName: String)
+
+    @Query("DELETE FROM todo_items WHERE list_id = :listId AND is_done = :done")
+    suspend fun clearListWithDoneState(listId: Long, done: Boolean)
+
+    @Query("DELETE FROM todo_items WHERE list_id = :listId")
+    suspend fun clearList(listId: Long)
 }

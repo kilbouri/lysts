@@ -23,9 +23,9 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.unit.sp
-import ca.kilbourne.isaac.lysts.data.TodoItem
-import ca.kilbourne.isaac.lysts.data.TodoList
-import ca.kilbourne.isaac.lysts.data.TodoListWithItems
+import ca.kilbourne.isaac.lysts.data.domain.TodoItem
+import ca.kilbourne.isaac.lysts.data.domain.TodoList
+import ca.kilbourne.isaac.lysts.data.domain.TodoListWithItems
 import ca.kilbourne.isaac.lysts.ui.components.TodoListItemsColumn
 import kotlinx.coroutines.launch
 
@@ -35,7 +35,9 @@ fun MainActivityUiRoot(
     todoLists: List<TodoList>,
     currentList: TodoListWithItems?,
     onItemCompletionChange: (TodoItem, Boolean) -> Unit = { _, _ -> },
-    onAddItemRequest: () -> Unit = {}
+    onAddItemRequest: () -> Unit = {},
+    onRemoveDoneRequest: () -> Unit = {},
+    onClearListRequest: () -> Unit = {}
 ) {
     val coroutineScope = rememberCoroutineScope()
     val bottomSheetState = rememberModalBottomSheetState(skipPartiallyExpanded = true)
@@ -45,7 +47,9 @@ fun MainActivityUiRoot(
         topBar = {
             MainActivityTopBar(
                 currentList = currentList?.list,
-                showListPicker = { showBottomSheet = true }
+                showListPicker = { showBottomSheet = true },
+                onRemoveAllRequest = onClearListRequest,
+                onRemoveDoneRequest = onRemoveDoneRequest
             )
         },
         floatingActionButton = {

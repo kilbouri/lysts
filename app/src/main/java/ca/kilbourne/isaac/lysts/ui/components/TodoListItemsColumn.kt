@@ -21,7 +21,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.unit.dp
-import ca.kilbourne.isaac.lysts.data.TodoItem
+import ca.kilbourne.isaac.lysts.data.domain.TodoItem
 import ca.kilbourne.isaac.lysts.ui.theme.CustomIcons
 
 @Composable

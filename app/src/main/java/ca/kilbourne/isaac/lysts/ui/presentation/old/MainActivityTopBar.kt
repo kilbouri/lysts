@@ -22,7 +22,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
-import ca.kilbourne.isaac.lysts.data.TodoList
+import ca.kilbourne.isaac.lysts.data.domain.TodoList
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable

@@ -1,4 +1,4 @@
-package ca.kilbourne.isaac.lysts.data
+package ca.kilbourne.isaac.lysts.data.domain
 
 import ca.kilbourne.isaac.lysts.persistence.room.entities.TodoItemEntity
 

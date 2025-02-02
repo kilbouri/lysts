@@ -19,8 +19,8 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
-import ca.kilbourne.isaac.lysts.data.TodoList
-import ca.kilbourne.isaac.lysts.data.TodoListWithItems
+import ca.kilbourne.isaac.lysts.data.domain.TodoList
+import ca.kilbourne.isaac.lysts.data.domain.TodoListWithItems
 import ca.kilbourne.isaac.lysts.ui.components.TextInputDialog
 import ca.kilbourne.isaac.lysts.ui.components.debounced
 import kotlinx.coroutines.launch

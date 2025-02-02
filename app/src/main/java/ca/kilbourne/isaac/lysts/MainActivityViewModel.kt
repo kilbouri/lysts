@@ -2,45 +2,52 @@ package ca.kilbourne.isaac.lysts
 
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
-import ca.kilbourne.isaac.lysts.data.TodoItem
-import ca.kilbourne.isaac.lysts.data.TodoList
-import ca.kilbourne.isaac.lysts.data.TodoListWithItems
-import ca.kilbourne.isaac.lysts.persistence.room.dao.CurrentListDao
-import ca.kilbourne.isaac.lysts.persistence.room.dao.TodoItemDao
-import ca.kilbourne.isaac.lysts.persistence.room.dao.TodoListDao
+import ca.kilbourne.isaac.lysts.data.domain.TodoItem
+import ca.kilbourne.isaac.lysts.data.repositories.TodoItemRepository
+import ca.kilbourne.isaac.lysts.data.repositories.TodoListRepository
 import ca.kilbourne.isaac.lysts.persistence.room.database.AppDatabase
-import ca.kilbourne.isaac.lysts.persistence.room.relations.CurrentListRelation
-import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.launch
 
 class MainActivityViewModel(application: Application) : AndroidViewModel(application) {
 
     private val db = AppDatabase.getDatabase(getApplication())
 
-    val currentTodoList = CurrentTodoListProxy(db.currentListDao())
-    val todoLists = TodoListsProxy(db.todoListDao())
-    val todoItems = TodoItemsProxy(db.todoItemDao())
+    val todoLists = TodoListRepository(db.todoListDao(), db.currentListDao())
+    val todoItems = TodoItemRepository(db.todoItemDao())
 
-    class TodoListsProxy(private val dao: TodoListDao) {
-        fun getAll() = dao.getAll().map { it.map(TodoList::fromNotNull) }
-        fun getWithItems(listId: Long) = dao.getWithItems(listId).map(TodoListWithItems::from)
-
-        suspend fun create(newList: TodoList) = dao.insert(newList.toEntity())
-        suspend fun delete(id: Long) = dao.delete(id)
-        suspend fun rename(id: Long, newName: String) = dao.rename(id, newName)
+    fun onItemCompletionChange(coroutineScope: CoroutineScope): (TodoItem, Boolean) -> Unit {
+        return { item, done ->
+            coroutineScope.launch {
+                todoItems.setCompletion(item.id, done)
+            }
+        }
     }
 
-    class TodoItemsProxy(private val dao: TodoItemDao) {
-        suspend fun create(item: TodoItem) = dao.insert(item.toEntity())
-        suspend fun setCompletion(itemId: Long, done: Boolean) = dao.setCompletion(itemId, done)
-        suspend fun delete(itemId: Long) = dao.delete(itemId)
-        suspend fun rename(itemId: Long, newName: String) = dao.rename(itemId, newName)
+    fun onAddItemRequest(listId: Long?, coroutineScope: CoroutineScope): () -> Unit {
+        return {
+            coroutineScope.launch {
+                if (listId == null) return@launch
+                todoItems.create(TodoItem(listId = listId, description = "Item"))
+            }
+        }
     }
 
-    class CurrentTodoListProxy(private val dao: CurrentListDao) {
-        fun get() = dao.get().map<CurrentListRelation?, _> { TodoList.from(it?.list) }
-        fun withItems() = dao.getWithItems().map(TodoListWithItems::from)
+    fun onRemoveDoneRequest(listId: Long?, coroutineScope: CoroutineScope): () -> Unit {
+        return {
+            coroutineScope.launch {
+                if (listId == null) return@launch
+                todoItems.removeCompleteFromList(listId)
+            }
+        }
+    }
 
-        suspend fun set(listId: Long) = dao.set(listId)
-        suspend fun delete() = dao.delete()
+    fun onRemoveAllRequest(listId: Long?, coroutineScope: CoroutineScope): () -> Unit {
+        return {
+            coroutineScope.launch {
+                if (listId == null) return@launch
+                todoItems.removeAllFromList(listId)
+            }
+        }
     }
 }

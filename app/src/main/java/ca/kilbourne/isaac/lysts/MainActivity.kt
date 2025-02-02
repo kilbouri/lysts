@@ -8,10 +8,8 @@ import androidx.activity.viewModels
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import ca.kilbourne.isaac.lysts.data.TodoItem
 import ca.kilbourne.isaac.lysts.ui.presentation.main.MainActivityUiRoot
 import ca.kilbourne.isaac.lysts.ui.theme.LystsTheme
-import kotlinx.coroutines.launch
 
 class MainActivity : ComponentActivity() {
 
@@ -22,33 +20,20 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
 
         setContent {
-            val coroutineScope = rememberCoroutineScope()
+            val scope = rememberCoroutineScope()
             val allLists by viewModel.todoLists.getAll().collectAsStateWithLifecycle(listOf())
-            val currList by viewModel.currentTodoList.withItems().collectAsStateWithLifecycle(null)
-
-            val onItemCompletionChange: (TodoItem, Boolean) -> Unit = { item, done ->
-                coroutineScope.launch {
-                    viewModel.todoItems.setCompletion(item.id, done)
-                }
-            }
-
-            val onAddItemRequest: () -> Unit = {
-                coroutineScope.launch {
-                    val listId = currList?.list?.id
-                    if (listId == null) return@launch
-                    viewModel.todoItems.create(TodoItem(listId = listId, description = "Item"))
-                }
-            }
+            val currList by viewModel.todoLists.currentWithItems().collectAsStateWithLifecycle(null)
 
             LystsTheme {
                 MainActivityUiRoot(
                     todoLists = allLists,
                     currentList = currList,
-                    onItemCompletionChange = onItemCompletionChange,
-                    onAddItemRequest = onAddItemRequest
+                    onItemCompletionChange = viewModel.onItemCompletionChange(scope),
+                    onAddItemRequest = viewModel.onAddItemRequest(currList?.list?.id, scope),
+                    onRemoveDoneRequest = viewModel.onRemoveDoneRequest(currList?.list?.id, scope),
+                    onClearListRequest = viewModel.onRemoveAllRequest(currList?.list?.id, scope)
                 )
             }
         }
-
     }
 }

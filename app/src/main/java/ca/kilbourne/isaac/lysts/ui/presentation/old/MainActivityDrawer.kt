@@ -9,7 +9,7 @@ import androidx.compose.material3.IconButton
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
-import ca.kilbourne.isaac.lysts.data.TodoList
+import ca.kilbourne.isaac.lysts.data.domain.TodoList
 import ca.kilbourne.isaac.lysts.ui.components.TodoListList
 
 @OptIn(ExperimentalMaterial3Api::class)
