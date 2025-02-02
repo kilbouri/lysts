@@ -72,7 +72,7 @@ private fun TodoListItem(
 
 @Composable
 private fun TodoItemDeleteArea(modifier: Modifier, onDeleteRequest: () -> Unit = {}) {
-`    Row(
+    Row(
         horizontalArrangement = Arrangement.Center,
         modifier = modifier
             .background(MaterialTheme.colorScheme.errorContainer)
