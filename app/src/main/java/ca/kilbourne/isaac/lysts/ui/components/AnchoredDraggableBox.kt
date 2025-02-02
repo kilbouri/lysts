@@ -1,5 +1,6 @@
 package ca.kilbourne.isaac.lysts.ui.components
 
+import androidx.compose.animation.core.exponentialDecay
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.gestures.AnchoredDraggableState
@@ -26,8 +27,8 @@ private enum class TwoWayDraggableAnchors {
     End
 }
 
-@Composable
 @OptIn(ExperimentalFoundationApi::class)
+@Composable
 fun TwoWayAnchoredDraggableBox(
     offsetSize: Dp,
     modifier: Modifier = Modifier,
@@ -43,9 +44,10 @@ fun TwoWayAnchoredDraggableBox(
     val state = remember {
         AnchoredDraggableState(
             initialValue = TwoWayDraggableAnchors.Center,
-            positionalThresholds,
-            velocityThreshold,
-            animationSpec = tween()
+            positionalThreshold = positionalThresholds,
+            velocityThreshold = velocityThreshold,
+            snapAnimationSpec = tween<Float>(),
+            decayAnimationSpec = exponentialDecay()
         ).apply {
             val newAnchors = with(density) {
                 DraggableAnchors {
