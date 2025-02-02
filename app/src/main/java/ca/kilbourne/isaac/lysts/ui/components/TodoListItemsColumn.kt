@@ -30,7 +30,7 @@ fun TodoListItemsColumn(
     onItemCompletionChange: (TodoItem, Boolean) -> Unit = { _, _ -> }
 ) {
     LazyColumn {
-        items(listItems) {
+        items(listItems, key = { item -> item.id }) {
             TodoListItem(item = it, onDoneChange = { done -> onItemCompletionChange(it, done) })
         }
     }
@@ -72,9 +72,7 @@ private fun TodoListItem(
 
 @Composable
 private fun TodoItemDeleteArea(modifier: Modifier, onDeleteRequest: () -> Unit = {}) {
-    // TODO: the ripple only appears on the icon-covered portion. This probably should
-    // be a real button anyway, but idk what type to use to get a square like this.
-    Row(
+`    Row(
         horizontalArrangement = Arrangement.Center,
         modifier = modifier
             .background(MaterialTheme.colorScheme.errorContainer)
