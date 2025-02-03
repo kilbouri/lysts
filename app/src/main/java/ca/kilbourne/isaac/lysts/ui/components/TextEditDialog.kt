@@ -2,6 +2,7 @@ package ca.kilbourne.isaac.lysts.ui.components
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.RowScope
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -30,26 +31,38 @@ import androidx.compose.ui.window.Dialog
 
 @Preview
 @Composable
-private fun PreviewTextInputDialog() {
-    TextInputDialog("Text Value", onCancel = {}, onAccept = {})
+fun PreviewTextEditDialog() {
+    TextEditDialog(onCancel = {}, onAccept = {}, text = "Text Value")
 }
 
+
+/**
+ * A modal dialog that allows the user to edit some text.
+ *
+ * @param onCancel Invoked when the dialog is dismissed or the Cancel button is tapped
+ * @param onAccept Invoked when the accept button is tapped, with the updated value the user entered
+ * @param autoFocus When `true`, the text field automatically takes focus
+ * @param text The initial value of the text input.
+ * @param selection The initial selection of the text input. Defaults to the entire
+ *                  initial text being selected.
+ * @param cancelButtonContent The content of the Cancel button. Defaults to "Cancel"
+ * @param acceptButtonContent The content of the Accept button. Defaults to "Accept"
+ */
 @Composable
-fun TextInputDialog(
-    initialValue: String = "",
-    cancelButtonLabel: String = "Cancel",
-    acceptButtonLabel: String = "Accept",
-    autoFocus: Boolean = true,
+fun TextEditDialog(
     onCancel: () -> Unit,
     onAccept: (String) -> Unit,
+    autoFocus: Boolean = true,
+    text: String = "",
+    selection: TextRange = TextRange(0, text.length),
+    acceptButtonContent: @Composable RowScope.() -> Unit = { Text("Accept") },
+    cancelButtonContent: @Composable RowScope.() -> Unit = { Text("Cancel") }
 ) {
     val focusRequester = remember { FocusRequester() }
-    var value: TextFieldValue by remember {
-        mutableStateOf(
-            TextFieldValue(
-                text = initialValue, selection = TextRange(initialValue.length)
-            )
-        )
+    var value by remember { mutableStateOf(TextFieldValue(text = text, selection = selection)) }
+
+    LaunchedEffect(Unit) {
+        if (autoFocus) focusRequester.requestFocus()
     }
 
     Dialog(onDismissRequest = onCancel) {
@@ -60,28 +73,24 @@ fun TextInputDialog(
                     onValueChange = { value = it },
                     modifier = Modifier.focusRequester(focusRequester)
                 )
-
                 Spacer(Modifier.height(16.dp))
 
                 Row(Modifier.align(Alignment.End)) {
                     Button(
-                        onClick = onCancel, colors = ButtonDefaults.buttonColors(
+                        onClick = onCancel,
+                        colors = ButtonDefaults.buttonColors(
                             containerColor = Color.Transparent,
                             contentColor = MaterialTheme.colorScheme.onPrimaryContainer
-                        )
-                    ) {
-                        Text(cancelButtonLabel)
-                    }
+                        ),
+                        content = cancelButtonContent
+                    )
 
-                    Button(onClick = debounced { onAccept(value.text) }) {
-                        Text(acceptButtonLabel)
-                    }
+                    Button(
+                        onClick = debounced { onAccept(value.text) },
+                        content = acceptButtonContent
+                    )
                 }
             }
         }
-    }
-
-    LaunchedEffect(Unit) {
-        if (autoFocus) focusRequester.requestFocus()
     }
 }
