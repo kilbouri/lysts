@@ -37,8 +37,7 @@ fun TwoWayAnchoredDraggableBox(
     content: @Composable (modifier: Modifier) -> Unit,
 ) {
     val density = LocalDensity.current
-    val positionalThresholds: (totalDistance: Float) -> Float =
-        { totalDistance -> totalDistance * 0.5f }
+    val positionalThresholds: (Float) -> Float = { 0.5f * it }
     val velocityThreshold: () -> Float = { with(density) { 100.dp.toPx() } }
 
     val state = remember {
